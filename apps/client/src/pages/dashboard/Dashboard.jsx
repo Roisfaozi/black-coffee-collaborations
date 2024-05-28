@@ -55,7 +55,7 @@ function Dashboard() {
             {intervals.map((data, index) => (
               <label
                 key={data.index}
-                className={`flex flex-col items-center ${index === 1 ? 'ml-[45px] mr-[35px] lg:mx-[118px]' : ''}`}
+                className={`flex flex-col items-center ${index === 1 ? 'ml-[45px] mr-[25px] lg:mx-[118px]' : ''}`}
               >
                 <input
                   type="radio"

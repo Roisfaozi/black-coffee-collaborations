@@ -13,14 +13,17 @@ function IncomeChart({ data, interval }) {
   const totalPrice = data.map((item) => item.total_price);
   const [clickedBarIndex, setClickedBarIndex] = useState(null);
   const [maxBarThickness, setMaxBarThickness] = useState(19);
+  const [labelSize, setLabelSize] = useState(15);
 
   // Change Bar Thickness When Resize
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 1024) {
         setMaxBarThickness(8);
+        setLabelSize(8);
       } else {
         setMaxBarThickness(19);
+        setLabelSize(15);
       }
     };
 
@@ -159,7 +162,7 @@ function IncomeChart({ data, interval }) {
         font: {
           family: 'Poppins',
           weight: 700,
-          size: 15,
+          size: labelSize,
         },
         clamp: true,
 
