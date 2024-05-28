@@ -1,0 +1,1522 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Black Coffeee API",
+    "description": "API for managing users in a coffee shop application",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://api.example.com"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["User API"],
+        "summary": "Create a new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "phone_number": {
+                    "type": "string"
+                  }
+                },
+                "required": ["id", "name", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterUserResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["User API"],
+        "summary": "Get all users",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUsersResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": ["User API"],
+        "summary": "Get user by ID",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/profile": {
+      "get": {
+        "tags": ["User API"],
+        "summary": "Get all users",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfileResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "put": {
+        "tags": ["User API"],
+        "summary": "Get all users",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserProfileUpdateRequest",
+                "required": ["address"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfileResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Permintaan tidak valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "InvalidFields": {
+                    "summary": "Contoh respons kesalahan validasi",
+                    "value": {
+                      "status": "Bad Request",
+                      "description": "Field validation for 'Name' failed"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": ["Auth API"],
+        "summary": "Login user Credentials",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  }
+                },
+                "required": ["username", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/reset-password": {
+      "post": {
+        "tags": ["Auth API"],
+        "summary": "Reset user password",
+        "description": "Allows a user to reset their password by providing their email address.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "User's email address"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset email sent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/resend-link": {
+      "post": {
+        "tags": ["Auth API"],
+        "summary": "Resend reset password link",
+        "description": "Allows a user to request a resend of the reset password link by providing their email address.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "User's email address"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset email sent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/products": {
+      "post": {
+        "tags": ["Products API"],
+        "summary": "Buat produk baru",
+        "operationId": "createProduct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Token"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Berhasil membuat produk",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostProdutResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Permintaan tidak valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "InvalidFields": {
+                    "summary": "Contoh respons kesalahan validasi",
+                    "value": {
+                      "status": "Bad Request",
+                      "description": "Field validation for 'Name' failed"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Products API"],
+        "summary": "Menapatkan semua produk",
+        "operationId": "createProduct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Token"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Berhasil membuat produk",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Permintaan tidak valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "InvalidFields": {
+                    "summary": "Contoh respons kesalahan validasi",
+                    "value": {
+                      "status": "Bad Request",
+                      "description": "Field validation for 'Name' failed"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "tags": ["Products API"],
+        "summary": "Dapatkan produk berdasarkan ID",
+        "operationId": "getProductById",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil mendapatkan produk",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "Produk tidak ditemukan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "example": {
+                  "status": "Not Found",
+                  "description": "Product not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Products API"],
+        "summary": "Perbarui produk berdasarkan ID",
+        "operationId": "updateProduct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Token"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Berhasil memperbarui produk",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "example": {
+                  "status": "OK",
+                  "description": "Product updated successfully"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "400": {
+            "description": "Permintaan tidak valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "InvalidFields": {
+                    "summary": "Contoh respons kesalahan validasi",
+                    "value": {
+                      "status": "Bad Request",
+                      "description": "Field validation for 'Name' failed"
+                    }
+                  },
+                  "ProductNotFound": {
+                    "summary": "Contoh respons produk tidak ditemukan",
+                    "value": {
+                      "status": "Not Found",
+                      "description": "Product not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Products API"],
+        "summary": "Hapus produk berdasarkan ID",
+        "operationId": "deleteProduct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil menghapus produk",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "example": {
+                  "status": "OK",
+                  "description": "Product deleted successfully"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Produk tidak ditemukan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "example": {
+                  "status": "Not Found",
+                  "description": "Product not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/favorite/{userId}": {
+      "post": {
+        "tags": ["Favorite API"],
+        "summary": "Buat favorit baru",
+        "operationId": "createFavorite",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Token"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FavoriteRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Favorit berhasil dibuat",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Favorite"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Favorite API"],
+        "summary": "Dapatkan favorit pengguna",
+        "operationId": "getFavoritesByUserID",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil mendapatkan daftar favorit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Favorite"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Hapus favorit",
+        "tags": ["Favorite API"],
+        "operationId": "deleteFavorite",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Favorit berhasil dihapus",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "example": {
+                  "status": "OK",
+                  "description": "Favorite deleted successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/orders": {
+      "post": {
+        "summary": "Buat order baru",
+        "tags": ["Orders API"],
+        "operationId": "createOrder",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Token"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Order berhasil dibuat",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/orders/{orderId}": {
+      "get": {
+        "summary": "Dapatkan detail order",
+        "tags": ["Orders API"],
+        "operationId": "getOrder",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detail order berhasil didapatkan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/orders/{orderId}/payment": {
+      "post": {
+        "summary": "Buat pembayaran untuk order",
+        "tags": ["Orders API"],
+        "operationId": "createPayment",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Token"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Pembayaran berhasil dibuat",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "Token": {
+        "name": "Authorization",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "ID of the user to retrieve"
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "7b10c2be-3d07-4df0-b793-2aeeaa81f296"
+          },
+          "username": {
+            "type": "string",
+            "example": "user123"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "user123@example.com"
+          },
+          "phone_number": {
+            "type": "string",
+            "example": "08234568474"
+          },
+          "role": {
+            "type": "string",
+            "example": "user"
+          }
+        }
+      },
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "7b10c2be-3d07-4df0-b793-2aeeaa81f296"
+          },
+          "username": {
+            "type": "string",
+            "example": "user123"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "user123@example.com"
+          },
+          "phone_number": {
+            "type": "string",
+            "example": "08234568474"
+          }
+        }
+      },
+      "UserProfile": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1234dkf"
+          },
+          "first_name": {
+            "type": "string",
+            "example": "zulaikha"
+          },
+          "last_name": {
+            "type": "string",
+            "format": "email",
+            "example": "zulaikha"
+          },
+          "display_name": {
+            "type": "string",
+            "format": "email",
+            "example": "zulaikha"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "Perempuan"
+          },
+          "gender": {
+            "type": "string",
+            "format": "email",
+            "example": "Perempuan"
+          },
+          "address": {
+            "type": "string",
+            "format": "email",
+            "example": "example addres stree example Jakarta"
+          },
+          "phone_number": {
+            "type": "string",
+            "example": "08234568474"
+          },
+          "birthday": {
+            "type": "string",
+            "example": "12/10/1999"
+          }
+        }
+      },
+      "UserProfileUpdateRequest": {
+        "type": "object",
+        "properties": {
+          "first_name": {
+            "type": "string",
+            "example": "zulaikha"
+          },
+          "last_name": {
+            "type": "string",
+            "format": "email",
+            "example": "zulaikha"
+          },
+          "display_name": {
+            "type": "string",
+            "format": "email",
+            "example": "zulaikha"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "Perempuan"
+          },
+          "gender": {
+            "type": "string",
+            "format": "email",
+            "example": "Perempuan"
+          },
+          "address": {
+            "type": "string",
+            "format": "email",
+            "example": "example addres stree example Jakarta"
+          },
+          "phone_number": {
+            "type": "string",
+            "example": "08234568474"
+          },
+          "birthday": {
+            "type": "string",
+            "example": "12/10/1999"
+          }
+        }
+      },
+      "RegisterUserResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "Created"
+          },
+          "data": {
+            "$ref": "#/components/schemas/UserResponse"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "GetUsersResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "OK"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserResponse"
+            }
+          },
+          "description": {
+            "type": "string",
+            "example": "Success get all user Data"
+          }
+        }
+      },
+      "GetUserResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "OK"
+          },
+          "data": {
+            "$ref": "#/components/schemas/UserResponse"
+          },
+          "description": {
+            "type": "string",
+            "example": "Success get all user Data"
+          }
+        }
+      },
+      "UserProfileResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "OK"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserProfile"
+            }
+          },
+          "description": {
+            "type": "string",
+            "example": "Success get all user profile"
+          }
+        }
+      },
+      "TokenResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "ProductsRequest": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "example": "Test Product" },
+          "description": { "type": "string", "example": "This is a test product" },
+          "price": { "type": "number", "format": "float", "example": 30000 },
+          "currency": { "type": "string", "example": "IDR" },
+          "category": { "type": "string", "example": "Makanan" },
+          "image_url": { "type": "string", "example": "https://examplo.com/path/images.jpg" }
+        }
+      },
+      "Size": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "example": "ac53f05a-2d88-4562-bef1-301d32dff13e" },
+          "name": { "type": "string", "example": "R" }
+        }
+      },
+      "Products": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "example": "3fdccf5e-92b6-4ceb-8204-576a4a54a17d" },
+          "name": {
+            "type": "string",
+            "example": "Test Product"
+          },
+          "description": {
+            "type": "string",
+            "example": "This is a test product"
+          },
+          "price": { "type": "number", "format": "float", "example": 30000 },
+          "currency": {
+            "type": "string",
+            "example": "IDR"
+          },
+          "category": {
+            "type": "string",
+            "example": "Makanan"
+          },
+          "image_url": {
+            "type": "string",
+            "example": "https://examplo.com/path/images.jpg"
+          },
+          "created_at": {
+            "type": "string",
+            "example": "2024-04-28T22:26:24.909663Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "example": "2024-04-28T22:26:24.909663Z"
+          },
+          "sizes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Size"
+            }
+          }
+        }
+      },
+      "PostProdutResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "example": "Created" },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "format": "uuid" }
+            }
+          },
+          "description": { "type": "string", "example": "Product created successfully" }
+        }
+      },
+      "ProductsResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "example": "Created" },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Products"
+            }
+          },
+          "description": { "type": "string", "example": "Product created successfully" }
+        }
+      },
+      "ProductResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "example": "Created" },
+          "data": {
+            "$ref": "#/components/schemas/Products"
+          },
+          "description": { "type": "string", "example": "Product created successfully" }
+        }
+      },
+      "Favorite": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "Created"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "67945cc9-045b-48a0-8de6-9e3af9338ddd"
+              },
+              "product_id": {
+                "type": "string",
+                "example": "508d25b2-f2cf-4ab6-9bd3-ab288c91f7c0"
+              },
+              "user_id": {
+                "type": "string",
+                "example": "33abd3cc-570b-4970-a151-fd27b5d56d67"
+              },
+              "created_at": {
+                "type": "string",
+                "example": "Favorite created successfully"
+              }
+            }
+          },
+          "description": {
+            "type": "string",
+            "example": "Favorite created successfully"
+          }
+        }
+      },
+      "FavoriteRequest": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string",
+            "description": "ID produk yang difavoritkan"
+          }
+        },
+        "required": ["productId"]
+      },
+      "OrderRequest": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID pengguna yang membuat order"
+          },
+          "deliveryAddress": {
+            "type": "string",
+            "description": "Alamat pengiriman"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "productId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": "ID produk"
+                },
+                "sizeId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": "ID ukuran produk"
+                },
+                "quantity": {
+                  "type": "integer",
+                  "description": "Jumlah produk"
+                },
+                "amount": {
+                  "type": "integer",
+                  "description": "Harga produk"
+                }
+              },
+              "required": ["productId", "sizeId", "quantity", "amount"]
+            }
+          }
+        },
+        "required": ["userId", "deliveryAddress", "products"]
+      },
+      "Order": {
+        "type": "object",
+        "properties": {
+          "orderId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID order"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID pengguna"
+          },
+          "totalPrice": {
+            "type": "integer",
+            "description": "Total harga sebelum pajak"
+          },
+          "taxes": {
+            "type": "number",
+            "format": "float",
+            "description": "Pajak"
+          },
+          "shipping": {
+            "type": "integer",
+            "description": "Biaya pengiriman"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status order"
+          },
+          "deliveryAddress": {
+            "type": "string",
+            "description": "Alamat pengiriman"
+          },
+          "totalAmount": {
+            "type": "integer",
+            "description": "Total harga setelah pajak dan pengiriman"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Waktu pembuatan order"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Waktu terakhir pembaruan order"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderItem"
+            }
+          }
+        },
+        "required": [
+          "orderId",
+          "userId",
+          "totalPrice",
+          "taxes",
+          "shipping",
+          "status",
+          "deliveryAddress",
+          "totalAmount",
+          "createdAt",
+          "updatedAt",
+          "products"
+        ]
+      },
+      "OrderItem": {
+        "type": "object",
+        "properties": {
+          "orderItemId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID item order"
+          },
+          "productId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID produk"
+          },
+          "sizeId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID ukuran produk"
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "Jumlah produk"
+          },
+          "amount": {
+            "type": "integer",
+            "description": "Harga produk"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Waktu pembuatan item order"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Waktu terakhir pembaruan item order"
+          }
+        },
+        "required": ["orderItemId", "productId", "sizeId", "quantity", "amount", "createdAt", "updatedAt"]
+      },
+      "OrderResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "Created"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Order"
+          },
+          "description": {
+            "type": "string",
+            "example": "Success create order payment"
+          }
+        }
+      },
+      "PaymentRequest": {
+        "type": "object",
+        "properties": {
+          "paymentMethodId": {
+            "type": "integer",
+            "description": "ID metode pembayaran"
+          },
+          "amount": {
+            "type": "integer",
+            "description": "Jumlah pembayaran"
+          }
+        },
+        "required": ["paymentMethodId", "amount"]
+      },
+      "Payment": {
+        "type": "object",
+        "properties": {
+          "paymentId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID pembayaran"
+          },
+          "orderId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID order"
+          },
+          "paymentMethodId": {
+            "type": "integer",
+            "description": "ID metode pembayaran"
+          },
+          "amount": {
+            "type": "integer",
+            "description": "Jumlah pembayaran"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Waktu pembuatan pembayaran"
+          }
+        },
+        "required": ["paymentId", "orderId", "paymentMethodId", "amount", "createdAt"]
+      },
+      "PaymentResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Payment"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "Response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "responses": {
+      "400": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Response"
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Response"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Response"
+            },
+            "examples": {
+              "ServerError": {
+                "summary": "Kesalahan pada server",
+                "value": {
+                  "status": "false",
+                  "description": "Internal Server Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

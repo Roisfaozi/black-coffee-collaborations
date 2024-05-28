@@ -1,0 +1,4 @@
+.idea
+api-specs.yaml
+apps/*/**.env
+apps/*/**.env.local

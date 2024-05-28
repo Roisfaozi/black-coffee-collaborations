@@ -1,0 +1,45 @@
+{
+  "homepage": {
+    "search_food": "/search?q",
+    "most_favorite_products": "/most-favorite-products"
+  },
+  "sign_up": {
+    "auth_register": "/signup",
+    "login_button": "/singin",
+    "oauth": "signin with google"
+  },
+  "sign_in": {
+    "singin": "/singin",
+    "signup": "/singup",
+    "oauth": "signin with google"
+  },
+  "forgot-password": {
+    "form_email": "/password-reset",
+    "resend_button": "/resend-link"
+  },
+  "products": {
+    "category": "/getcategories?",
+    "products_list": "/getproducts?category=",
+    "coupon": "/getcoupons"
+  },
+  "products/id": {
+    "product": "/products/:id",
+    "add-to-cart": "/order/add-to-cart",
+    "delivery-method": "/delivery",
+    "order": "/order-items"
+  },
+  "payment": {
+    "order": "/order/:id",
+    "payment_method": "/payment-method"
+  },
+  "history": {
+    "getHistroy": "/history",
+    "deleteHistroy": "/history"
+  },
+  "profile": {
+    "profile_user": "/user/profile"
+  },
+  "dashboard": {
+    "report": "/reports?order-by="
+  }
+}
