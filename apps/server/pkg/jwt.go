@@ -20,7 +20,11 @@ func NewToken(uid, role string) *claims {
 		Role: role,
 		RegisteredClaims: jwt.RegisteredClaims{
 			Issuer:    "backGolang",
+<<<<<<< HEAD
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 24)),
+=======
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Minute * 2)),
+>>>>>>> upstream/main
 		},
 	}
 }

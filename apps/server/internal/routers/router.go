@@ -1,21 +1,28 @@
 package routers
 
 import (
+<<<<<<< HEAD
 	"time"
 
 	"github.com/gin-contrib/cors"
+=======
+>>>>>>> upstream/main
 	"github.com/gin-gonic/gin"
 	"github.com/jmoiron/sqlx"
 )
 
 func New(db *sqlx.DB) *gin.Engine {
 	router := gin.Default()
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/main
 	router.Use(gin.Recovery())
 	router.GET("/ping", func(c *gin.Context) {
 		c.String(200, "pong")
 	})
 
+<<<<<<< HEAD
 	// Set up CORS options
 	corsConfig := cors.Config{
 		AllowOrigins:     []string{"*"},
@@ -40,6 +47,8 @@ func New(db *sqlx.DB) *gin.Engine {
 	attributeprod(router, db)
 	report(router, db)
 
+=======
+>>>>>>> upstream/main
 	return router
 
 }

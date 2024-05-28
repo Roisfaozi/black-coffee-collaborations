@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+<<<<<<< HEAD
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
@@ -32,6 +33,11 @@ export default {
         'shadow-button': '2px 4px 12px 2px rgba(0, 0, 0, 0.2)',
       },
     },
+=======
+  content: [],
+  theme: {
+    extend: {},
+>>>>>>> upstream/main
   },
   plugins: [],
 };

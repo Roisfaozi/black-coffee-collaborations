@@ -17,10 +17,16 @@
 .
 ├── README.md
 ├── apps
+<<<<<<< HEAD
 │   ├── server #Backend
 │   ├── client #Frontend
 ├── Dockerfile
 ├── docs       #documentation
+=======
+│   ├── server
+│   ├── client
+├── Dockerfile
+>>>>>>> upstream/main
 ├── Makefile
 ├── docker-compose.yml
 │
@@ -62,8 +68,11 @@ go mod tidy
 cd apps/client
 
 yarn install
+<<<<<<< HEAD
 #or
 npm install
+=======
+>>>>>>> upstream/main
 ```
 
 3. Run the app

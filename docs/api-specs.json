@@ -79,7 +79,18 @@
             }
           },
           "500": {
+<<<<<<< HEAD
             "$ref": "#/components/responses/500"
+=======
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+>>>>>>> upstream/main
           }
         }
       }
@@ -107,9 +118,12 @@
               }
             }
           },
+<<<<<<< HEAD
           "401": {
             "$ref": "#/components/responses/401"
           },
+=======
+>>>>>>> upstream/main
           "404": {
             "description": "User not found",
             "content": {
@@ -123,6 +137,7 @@
         }
       }
     },
+<<<<<<< HEAD
     "/users/profile": {
       "get": {
         "tags": ["User API"],
@@ -208,6 +223,8 @@
         }
       }
     },
+=======
+>>>>>>> upstream/main
     "/users/login": {
       "post": {
         "tags": ["Auth API"],
@@ -251,9 +268,31 @@
               }
             }
           },
+<<<<<<< HEAD
 
           "500": {
             "$ref": "#/components/responses/500"
+=======
+          "401": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+>>>>>>> upstream/main
           }
         }
       }
@@ -302,7 +341,18 @@
             }
           },
           "500": {
+<<<<<<< HEAD
             "$ref": "#/components/responses/500"
+=======
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+>>>>>>> upstream/main
           }
         }
       }
@@ -351,6 +401,7 @@
             }
           },
           "500": {
+<<<<<<< HEAD
             "$ref": "#/components/responses/500"
           }
         }
@@ -389,10 +440,14 @@
           },
           "400": {
             "description": "Permintaan tidak valid",
+=======
+            "description": "Internal Server Error",
+>>>>>>> upstream/main
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Response"
+<<<<<<< HEAD
                 },
                 "examples": {
                   "InvalidFields": {
@@ -856,6 +911,11 @@
           },
           "500": {
             "$ref": "#/components/responses/500"
+=======
+                }
+              }
+            }
+>>>>>>> upstream/main
           }
         }
       }
@@ -930,6 +990,7 @@
           }
         }
       },
+<<<<<<< HEAD
       "UserProfile": {
         "type": "object",
         "properties": {
@@ -1018,6 +1079,8 @@
           }
         }
       },
+=======
+>>>>>>> upstream/main
       "RegisterUserResponse": {
         "type": "object",
         "properties": {
@@ -1068,6 +1131,7 @@
           }
         }
       },
+<<<<<<< HEAD
       "UserProfileResponse": {
         "type": "object",
         "properties": {
@@ -1087,6 +1151,8 @@
           }
         }
       },
+=======
+>>>>>>> upstream/main
       "TokenResponse": {
         "type": "object",
         "properties": {
@@ -1103,6 +1169,7 @@
           }
         }
       },
+<<<<<<< HEAD
       "ProductsRequest": {
         "type": "object",
         "properties": {
@@ -1465,6 +1532,8 @@
           }
         }
       },
+=======
+>>>>>>> upstream/main
       "Response": {
         "type": "object",
         "properties": {
@@ -1476,6 +1545,7 @@
           }
         }
       }
+<<<<<<< HEAD
     },
     "responses": {
       "400": {
@@ -1517,6 +1587,8 @@
           }
         }
       }
+=======
+>>>>>>> upstream/main
     }
   }
 }

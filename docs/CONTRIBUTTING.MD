@@ -57,6 +57,7 @@ The repository is organized as follows:
 
 1. **Fork the repository**: Click on the "Fork" button at the top right corner of the repository page.
 2. **Clone your forked repository**:
+<<<<<<< HEAD
 
    ```sh
    git clone https://github.com/<username github>/black-coffee-collaborations.git
@@ -106,6 +107,14 @@ The repository is organized as follows:
 
    - Ensure you have Docker installed. Follow instructions [here](https://docs.docker.com/get-docker/).
 
+=======
+   ```sh
+   git clone https://github.com/<your-username>/black-coffee-collaborations.git
+   cd black-coffee-collaborations
+   ```
+3. **Set up the development environment**:
+   - Ensure you have Docker installed. Follow instructions [here](https://docs.docker.com/get-docker/).
+>>>>>>> upstream/main
    - Build and start the Docker containers:
      ```sh
      docker-compose up --build
@@ -126,10 +135,14 @@ If you have an idea for a new feature, we'd love to hear about it! Please [open 
 1. **Create a branch**:
 
    ```sh
+<<<<<<< HEAD
    git checkout -b <username github>/your-feature-name
 
    #eg:
    git checkout -b guslizikri/products
+=======
+   git checkout -b feature/your-feature-name
+>>>>>>> upstream/main
    ```
 
 2. **Make your changes** following the coding standards and best practices.
@@ -144,9 +157,12 @@ If you have an idea for a new feature, we'd love to hear about it! Please [open 
 
    ```sh
    git push origin feature/your-feature-name
+<<<<<<< HEAD
 
    #eg
    git push origin guslizikri/products
+=======
+>>>>>>> upstream/main
    ```
 
 5. **Create a Pull Request**: Go to the repository on GitHub and open a pull request from your branch. Describe your changes and link any relevant issues.
