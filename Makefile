@@ -1,7 +1,7 @@
 APP=server
 BUILD="./build/$(APP)"
 DB_DRIVER=postgres
-DB_SOURCE="postgres://postgres:postgres@localhost:5432/black_coffeee?sslmode=disable"
+DB_SOURCE="postgresql://black-coffee_owner:qcfTuJ1xYhi5@ep-rough-frost-a1hlex1a.ap-southeast-1.aws.neon.tech/black-coffee?sslmode=require"
 MIGRATIONS_DIR=./apps/server/db/migrations
 # https://github.com/golang-migrate/migrate/tree/master/cmd/migrate
 
