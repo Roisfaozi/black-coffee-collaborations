@@ -1,16 +1,11 @@
 services:
   cafe_server:
     container_name: cafe_server
-    build:
-      context: .
-      dockerfile: apps/server/Dockerfile
-    image: 'go-server'
+    image: 'roisfaozi/caffe-server-collab:1'
     ports:
       - '8081:8081'
     networks:
       - coffee_net
-    depends_on:
-      - cafe_db
     environment:
       - DB_HOST=ep-rough-frost-a1hlex1a.ap-southeast-1.aws.neon.tech
       - DB_NAME=black-coffee
