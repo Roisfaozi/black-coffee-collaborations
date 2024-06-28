@@ -14,7 +14,6 @@ func Posql() (*sqlx.DB, error) {
 	password := os.Getenv("DB_PASS")
 	dbname := os.Getenv("DB_NAME")
 
-	config := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable", host, user, password, dbname)
-	fmt.Println(config)
+	config := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=require", host, user, password, dbname)
 	return sqlx.Connect("postgres", config)
 }
