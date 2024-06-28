@@ -3,7 +3,7 @@ services:
     container_name: cafe_server
     image: 'roisfaozi/caffe-server-collab:1'
     ports:
-      - '8081:8081'
+      - '9090:9090'
     networks:
       - coffee_net
     environment:
